@@ -7,17 +7,15 @@ on:
     branches: ["main"]
 
 jobs:
-  lint-build-docker:
+  lint-and-build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -33,6 +31,3 @@ jobs:
 
       - name: Build project
         run: pnpm build
-
-      - name: Build Docker image
-        run: docker build -t cicd-web:${{ github.sha }} .
