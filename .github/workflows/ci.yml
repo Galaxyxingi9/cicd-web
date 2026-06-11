@@ -11,7 +11,7 @@ permissions:
   packages: write
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/cicd-web
+  IMAGE_NAME: ghcr.io/galaxyxingi9/cicd-web
 
 jobs:
   lint-build-push:
