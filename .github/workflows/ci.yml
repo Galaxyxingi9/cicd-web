@@ -70,13 +70,25 @@ jobs:
       - name: Log in to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
+      - name: Prepare deployment files
+        run: |
+          mkdir -p /opt/cicd-web
+          cp compose.yaml /opt/cicd-web/compose.yaml
+          echo "IMAGE_TAG=${{ github.sha }}" > /opt/cicd-web/.env
+          echo "Deploying image tag: ${{ github.sha }}"
+
       - name: Deploy with Docker Compose
         run: |
+          cd /opt/cicd-web
           docker compose pull
           docker compose up -d
           docker compose ps
 
       - name: Health check
         run: |
-          sleep 3
+          sleep 5
           curl -f http://localhost:8080/health
+
+      - name: Show deployed image
+        run: |
+          docker inspect cicd-web --format='{{.Config.Image}}'

@@ -1,6 +1,6 @@
 services:
   cicd-web:
-    image: ghcr.io/galaxyxingi9/cicd-web:latest
+    image: ghcr.io/galaxyxingi9/cicd-web:${IMAGE_TAG:-latest}
     container_name: cicd-web
     restart: unless-stopped
     ports:
