@@ -1,0 +1,12 @@
+services:
+  cicd-web:
+    image: ghcr.io/galaxyxingi9/cicd-web:latest
+    container_name: cicd-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
